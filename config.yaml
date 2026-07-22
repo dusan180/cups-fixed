@@ -1,5 +1,5 @@
 name: CUPS Fixed
-version: "1.7"
+version: "1.8"
 slug: cupsik_fixed
 description: A CUPS print server with working AirPrint and persistent HP plugin
 arch:
