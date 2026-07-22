@@ -12,10 +12,11 @@ rm -v -fR /etc/cups
 
 ln -v -s /config/cups /etc/cups
 bashio::log.info "Preparing HP plugin state"
-mkdir -p /var/lib/hp
-if [ -f /config/hp/hplip.state ]; then
-  cp -f /config/hp/hplip.state /var/lib/hp/hplip.state
-fi
+mkdir -p /config/hp
+
+rm -rf /var/lib/hp
+
+ln -s /config/hp /var/lib/hp
 bashio::log.info "Starting CUPS server as CMD from S6"
 
 cupsd -f
