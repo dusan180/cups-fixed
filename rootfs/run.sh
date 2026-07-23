@@ -17,6 +17,14 @@ mkdir -p /config/hp
 rm -rf /var/lib/hp
 
 ln -s /config/hp /var/lib/hp
+
+mkdir -p /config/hplip-prnt-plugins
+
+rm -rf /usr/share/hplip/prnt/plugins
+
+ln -s /config/hplip-prnt-plugins /usr/share/hplip/prnt/plugins
+
+
 bashio::log.info "Starting CUPS server as CMD from S6"
 
 cupsd -f
