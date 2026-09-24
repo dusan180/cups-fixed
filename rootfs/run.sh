@@ -35,11 +35,17 @@ bashio::log.info "Starting HP USB URI watchdog"
       continue
     fi
 
-    current_uri="$(lpstat -v HP_LaserJet_Professional_P1102 2>/dev/null | sed 's/^device for HP_LaserJet_Professional_P1102: //')"
+    printer_name="$(lpstat -p 2>/dev/null | awk '/HP_LaserJet_Professional_P1102/ {print $2; exit}')"
+
+    if [ -z "$printer_name" ]; then
+      continue
+    fi
+
+    current_uri="$(lpstat -v "$printer_name" 2>/dev/null | sed "s/^device for ${printer_name}: //")"
 
     if [ -n "$current_uri" ] && [ "$current_uri" != "$detected_uri" ]; then
       bashio::log.warning "HP printer URI changed: ${current_uri} -> ${detected_uri}"
-      lpadmin -p HP_LaserJet_Professional_P1102 -v "$detected_uri"
+      lpadmin -p "$printer_name" -v "$detected_uri"
     fi
   done
 ) &
